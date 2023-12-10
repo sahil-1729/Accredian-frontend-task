@@ -13,6 +13,15 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 
 import Select from "./MUI_components/Select";
+
+// Router
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  useNavigate as Navigate,
+} from "react-router-dom";
 const BasicTextFields = ({ fn, field, type, required, val }) => {
   // console.log(field," ",type)
 
@@ -202,7 +211,10 @@ const RegPage = () => {
           <BasicButtons text="Sign up" />
         </form>
         <h4 style={{ fontFamily: "Roboto,Helvetica,Arial,sans-serif" }}>
-          Already a User? <a href="www.google.com">Login</a>
+          Already a User?
+          <Link to="/Login">
+            <a href="url">Login</a>
+          </Link>
         </h4>
         <br />
       </div>
@@ -398,7 +410,10 @@ const LoginPage = () => {
           <a href="www.google.com">Forgot Password?</a>
         </h4>
         <h4 style={{ fontFamily: "Roboto,Helvetica,Arial,sans-serif" }}>
-          Don't have an account? <a href="www.google.com">Sign up</a>
+          Don't have an account?
+          <Link to="/">
+            <a href="www.google.com">Sign up</a>
+          </Link>
         </h4>
 
         {/* <br /> */}
