@@ -5,6 +5,7 @@ import Sidebar from '../../components/navigation/Sidebar.jsx'
 import Topbar from '../../components/navigation/Topbar.jsx'
 import LoadingState from '../../components/feedback/LoadingState.jsx'
 import ErrorBoundary from '../../components/feedback/ErrorBoundary.jsx'
+import Toast from '../../components/feedback/Toast.jsx'
 import useAppStore from '../../store/useAppStore'
 
 const AppLayout = () => {
@@ -38,6 +39,7 @@ const AppLayout = () => {
           </Box>
         </Fade>
       </Box>
+      <Toast />
     </Box>
   )
 }
