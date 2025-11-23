@@ -20,14 +20,11 @@ import GeneratedPreview from '../components/GeneratedPreview'
 
 const PromptGenerator = () => {
   const navigate = useNavigate()
-  const { promptGenerator, setPromptGenerator, setToast } = useAppStore((state) => ({
+  const { promptGenerator, setPromptGenerator, setToast, appendVisualNodes } = useAppStore((state) => ({
     promptGenerator: state.promptGenerator,
     setPromptGenerator: state.setPromptGenerator,
     setToast: state.setToast,
-  }))
-  const { visualEditor, setVisualEditor } = useAppStore((state) => ({
-    visualEditor: state.visualEditor,
-    setVisualEditor: state.setVisualEditor,
+    appendVisualNodes: state.appendVisualNodes,
   }))
 
   const [isGenerating, setIsGenerating] = useState(false)
@@ -85,21 +82,17 @@ const PromptGenerator = () => {
   }, [promptGenerator.activePrompt, promptGenerator.parameters, promptGenerator.history, setPromptGenerator, setToast])
 
   const handleLoadToEditor = useCallback(() => {
-    if (!promptGenerator.generatedSchema) {
+    const nodesToAdd = promptGenerator.generatedSchema?.nodes || []
+    if (!nodesToAdd.length) {
+      setToast('Nothing to load yet. Generate a schema first.', 'info')
       return
     }
 
-    const nodesToAdd = promptGenerator.generatedSchema.nodes || []
-    const updatedNodes = [...visualEditor.nodes, ...nodesToAdd]
-
-    setVisualEditor({
-      nodes: updatedNodes,
-      selectedNodeId: nodesToAdd[0]?.id || null,
-    })
+    appendVisualNodes(nodesToAdd)
 
     setToast('Components loaded into editor', 'success')
     navigate('/editor')
-  }, [promptGenerator.generatedSchema, visualEditor.nodes, setVisualEditor, setToast, navigate])
+  }, [appendVisualNodes, navigate, promptGenerator.generatedSchema, setToast])
 
   const handleSavePrompt = () => {
     if (!promptGenerator.activePrompt) return
